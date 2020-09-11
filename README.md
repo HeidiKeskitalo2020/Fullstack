@@ -2,5 +2,5 @@
 
 
 ****
-Full stack kurssin tehtävät 2020
+Full stack Exercises 2020
 ****
