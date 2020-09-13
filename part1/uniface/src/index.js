@@ -10,14 +10,13 @@ const App = (props) => {
   const [bad, setBad] = useState(0)
   const increaseByone3 = () => setBad(bad +1)
 
-  
-  const  Display = ({ counter }) => <div>{counter}</div>
 
   const Button = ({ handleClick, text }) => (
     <button onClick={handleClick}>
       {text}
     </button>
   )
+  
   
   return (
     <div>
@@ -36,19 +35,17 @@ const App = (props) => {
       />    
       <h2>statistics</h2>   
           
-      <p>good </p>
-      <Display counter ={good}/>
-      
-      <p>neutral </p>
-      <Display counter ={neutral}/>
-      
-      <p>bad </p>
-      <Display counter ={bad}/>
-      
+      <p>good  {good}</p>
+      <p>neutral {neutral}</p>
+      <p>bad {bad}</p>
+      <p>all {good + neutral + bad}</p>
+      <p>avarage {(good + neutral + bad )/3}</p>
+      <p>positive {good/(good + neutral + bad) * 100}</p>
+            
     </div>
   )
 }
-
+//avarage yläpuolella ei toimi.
 ReactDOM.render(<App />, 
   document.getElementById('root')
 )
