@@ -2,41 +2,37 @@
 import React, { useState } from 'react'
 import ReactDOM from 'react-dom'
 
-const App = (props) => {
-  const [ counter, setCounter ] = useState(0)
+const Display = props => <div>{props.value}</div> 
 
-  const increaseByOne = () => setCounter(counter + 5)
-  const decreaseByOne = () => setCounter(counter - 1)
-  const setToZero = () => setCounter(0)
+const Button = (props) => (
+  <button onClick={props.handleClick}>
+    {props.text}
+  </button>
+)
 
-  const Display = ({ counter }) => <div>{counter}</div>
 
-  const Button = ({ handleClick, text }) => (
-    <button onClick={handleClick}>
-      {text}
-    </button>
-  )
+const App = props => {
+  const [value, setValue] = useState(10)
 
+  const setToValue = (newValue) => {
+    setValue(newValue)
+  }
+  
   
 
   return (
     <div>
-       <Display counter={counter}/>
-       <Button
-        handleClick={increaseByOne}
-        text='plus'
-      />
-      <Button
-        handleClick={setToZero}
-        text='zero'
-      />     
-      <Button
-        handleClick={decreaseByOne}
-        text='minus'
-      />           
-  </div>
+      {value}
+      <Display value={value} />
+      <Button handleClick={() => setToValue(1000)} text="thousand" />
+      <Button handleClick={() => setToValue(0)} text="reset" />
+      <Button handleClick={() => setToValue(value + 1)} text="increment" />
+    </div>
+    
   )
 }
 
-
-ReactDOM.render(<App />, document.getElementById('root'))
+ReactDOM.render(
+  <App />, 
+  document.getElementById('root')
+)
