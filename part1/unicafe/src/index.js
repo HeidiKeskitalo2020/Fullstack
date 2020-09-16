@@ -39,7 +39,7 @@ const App = (props) => {
       <p>neutral {neutral}</p>
       <p>bad {bad}</p>
       <p>all {good + neutral + bad}</p>
-      <p>avarage {(good + neutral + bad )/3}</p>
+      <p>avarage {(good - bad )/(good + neutral + bad)}</p>
       <p>positive {good/(good + neutral + bad) * 100}</p>
             
     </div>
