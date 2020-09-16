@@ -17,7 +17,6 @@ const App = (props) => {
     </button>
   )
   
-  
   return (
     <div>
       <h1>give feedback</h1>
