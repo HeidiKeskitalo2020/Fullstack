@@ -1,20 +1,20 @@
-## PART 1
-****
-****
-
-### Exercises:
+# PART 1
 ****
 
+## Exercises:
+****
+### Course information
 - [x] 1.1 
 
 - [x] 1.2
 
-- [ ] 1.3
+- [x] 1.3
 
 - [ ] 1.4 
 
 - [ ] 1.5
 
+### Uniface
 - [x] 1.6
  
 - [x] 1.7 
@@ -27,6 +27,7 @@
 
 - [ ] 1.11
 
+### Anecdotes
 - [ ] 1.12
 
 - [ ] 1.13
