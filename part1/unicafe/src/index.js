@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
 import ReactDOM from 'react-dom'
 
-const Statisticks = (props) => {
+const Statisticks = ({text, value}) => {
   return (
     <div>
-      <p>{props.text} {props.value}</p>
+      <p>{text} {value}</p>
     </div>
   )
 }
@@ -16,15 +16,26 @@ const Button = ({ handleClick, text }) => (
 
 const App = (props) => {
   const [good, setGood] = useState(0)
-  const increaseByOne1 = () => setGood(good +1)
   const [neutral, setNeutral] = useState(0)
-  const increaseByOne2 = () => setNeutral(neutral +1)
   const [bad, setBad] = useState(0)
+  
+ 
+  const increaseByOne1 = () => setGood(good +1)
+  const increaseByOne2 = () => setNeutral(neutral +1)
   const increaseByone3 = () => setBad(bad +1)
 
- 
-
-
+  if (good + neutral + bad === 0) {
+  return (
+    <div>
+      <h1>give feedback</h1>
+      <Button handleClick={increaseByOne1} text='good' />
+      <Button handleClick={increaseByOne2} text='neutral' />     
+      <Button handleClick={increaseByone3} text='bad' /> 
+      <h2>statistics</h2>   
+      <p>No feedback given</p>
+    </div>
+  )
+}
   return (
     <div>
       <h1>give feedback</h1>
@@ -38,7 +49,6 @@ const App = (props) => {
       <Statisticks text='all' value={good + neutral + bad} />
       <Statisticks text='avarage' value={(good - bad )/(good + neutral + bad)}/>
       <Statisticks text='positive' value={good/(good + neutral + bad) * 100}/>  
-      
     </div>
   )
 }
