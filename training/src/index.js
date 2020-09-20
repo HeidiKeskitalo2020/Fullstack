@@ -2,38 +2,58 @@
 import React, { useState } from 'react'
 import ReactDOM from 'react-dom'
 
-const Display = props => <div>{props.value}</div> 
-
-const Button = (props) => (
-  <button onClick={props.handleClick}>
-    {props.text}
-  </button>
-)
-
-
-const App = props => {
-  const [value, setValue] = useState(10)
-
-  const setToValue = (newValue) => {
-    setValue(newValue)
-  }
-  
-  
-
+const Display = (props) => {
   return (
-    <div>
-      {value}
-      <Display value={value} />
-      <Button handleClick={() => setToValue(1000)} text="thousand" />
-      <Button handleClick={() => setToValue(0)} text="reset" />
-      <Button handleClick={() => setToValue(value + 1)} text="increment" />
-    </div>
-    
+    <div>{props.counter}</div>
   )
 }
 
+const Button = (props) => {
+  return (
+    <button onClick={props.handleClick}>
+      {props.text}
+    </button>
+  )
+}  
+
+const App = (props) => {
+  const [ counter, setCounter ] = useState(0)
+
+  const increaseByOne = () => setCounter(counter + 1)
+  const decreaseByOne = () => setCounter(counter - 1)
+  const setToZero = () => setCounter(0)
+  
+  return (
+    <div>
+    <Display counter={counter}/>
+    <Button
+        handleClick={increaseByOne}
+        text='plus'
+      />
+      <Button
+        handleClick={setToZero}
+        text='zero'
+      />     
+      <Button
+        handleClick={decreaseByOne}
+        text='minus'
+      />           
+    </div>
+  )
+}
+
+let counter = 1
+
+const refresh = () => {
+  ReactDOM.render(<App counter={counter} />, 
+  document.getElementById('root'))
+}
+
+
+
+
 ReactDOM.render(
-  <App />, 
+  <App counter={counter} />, 
   document.getElementById('root')
 )
 
