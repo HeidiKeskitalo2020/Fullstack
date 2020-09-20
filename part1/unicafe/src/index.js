@@ -23,7 +23,6 @@ const Display = (props) => {
 
 const Button = ({ increaseByOne1, increaseByOne2, increaseByone3}) => {
   return (
-    
     <div>
     <Button handleClick={increaseByOne1} text='good' />
     <Button handleClick={increaseByOne2} text='neutral' />     
