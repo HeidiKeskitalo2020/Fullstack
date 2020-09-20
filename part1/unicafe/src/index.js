@@ -1,36 +1,6 @@
 import React, { useState } from 'react'
 import ReactDOM from 'react-dom'
 
-const Statistics = ({good, neutral, bad}) => {
-  return (
-    <div>
-      <StatisticLine text='good' value={good} />
-      <StatisticLine text='neutral' value={neutral} />
-      <StatisticLine text= 'bad' value={bad} />
-      <StatisticLine text='all' value={good + neutral + bad} />
-      <StatisticLine text='avarage' value={(good - bad )/(good + neutral + bad)}/>
-      <StatisticLine text='positive' value={good/(good + neutral + bad) * 100} />  
-    </div>
-  )
-}
-const StatisticLine = ({text, value}) => (<Display text={text} value={value} />)
-
-const Display = (props) => {
-  return (
-  <div>{props.text} {props.value}</div>
-  )
-}
-
-const Button = ({ increaseByOne1, increaseByOne2, increaseByone3}) => {
-  return (
-    <div>
-    <Button handleClick={increaseByOne1} text='good' />
-    <Button handleClick={increaseByOne2} text='neutral' />     
-    <Button handleClick={increaseByone3} text='bad' />  
-    </div>
-  )
-}
-
 const App = (props) => {
   const [good, setGood] = useState(0)
   const [neutral, setNeutral] = useState(0)
@@ -41,7 +11,7 @@ const App = (props) => {
   const increaseByone3 = () => setBad(bad +1)
 
   const statistics = <Statistics good={good} neutral={neutral} bad={bad} />
-  const buttons = <Button increaseByOne1={increaseByOne1} increaseByOne2={increaseByOne2} increaseByone3={increaseByone3} />
+  const buttons = <Buttons increaseByOne1={increaseByOne1} increaseByOne2={increaseByOne2} increaseByone3={increaseByone3} />
 
   if (good + neutral + bad === 0) {
   return (
@@ -62,6 +32,39 @@ const App = (props) => {
     </div>
   )
 }
+
+const Statistics = ({good, neutral, bad}) => {
+  return (
+    <div>
+      <StatisticLine text='good' value={good} />
+      <StatisticLine text='neutral' value={neutral} />
+      <StatisticLine text= 'bad' value={bad} />
+      <StatisticLine text='all' value={good + neutral + bad} />
+      <StatisticLine text='avarage' value={(good - bad )/(good + neutral + bad)}/>
+      <StatisticLine text='positive' value={good/(good + neutral + bad) * 100} />  
+    </div>
+  )
+}
+const StatisticLine = ({text, value}) => (<Display text={text} value={value} />)
+
+const Display = (props) => {
+  return (
+  <div>{props.text} {props.value}</div>
+  )
+}
+
+const Button = ({handleClick, text}) => (<button onClick={handleClick}> {text} </button>)
+
+const Buttons = ({ increaseByOne1, increaseByOne2, increaseByone3}) => {
+  return (
+    <div>
+    <Button handleClick={increaseByOne1} text='good' />
+    <Button handleClick={increaseByOne2} text='neutral' />     
+    <Button handleClick={increaseByone3} text='bad' />  
+    </div>
+  )
+}
+
 
 ReactDOM.render(<App />, 
   document.getElementById('root')
