@@ -6,16 +6,33 @@ const App = (props) => {
   const random =() => {
     setSelected(Math.floor(Math.random() * 6 ))
   }  
+  const vote = () => setSelected(selected + 1)
+  const [countVote, setVote] = usestate(votes)
+  const buttons = <Buttons random={random} vote={vote} />
   
   return (
     <div>
       <p>{props.anecdotes[selected]}</p>
-      <Button handleClick={random} text='nex anecdote' />       
+      <>{buttons}</> 
+      <p>has {} votes</p>  
     </div>
   )
 }
+const Buttons = ({ vote, random}) => {
+  return (
+    <div>
+    <Button handleClick={vote} text='vote' />
+    <Button handleClick={random} text='next anecdote' />     
+    </div>
+  )
+}
+const Button = ({handleClick, text}) => (<button onClick={handleClick}> </button>)
 
-const Button = ({handleClick, text}) => (<button onClick={handleClick}> {text} </button>)
+const Display = (props) => {
+  return (
+  <div>{props.text} {props.value}</div>
+  )
+}
 
 const anecdotes = [
   'If it hurts, do it more often',
