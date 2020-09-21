@@ -34,22 +34,36 @@ const App = (props) => {
 }
 
 const Statistics = ({good, neutral, bad}) => {
-  return (
-    <div>
-      <StatisticLine text='good' value={good} />
-      <StatisticLine text='neutral' value={neutral} />
-      <StatisticLine text= 'bad' value={bad} />
-      <StatisticLine text='all' value={good + neutral + bad} />
-      <StatisticLine text='avarage' value={(good - bad )/(good + neutral + bad)}/>
-      <StatisticLine text='positive' value={good/(good + neutral + bad) * 100} />  
-    </div>
+  return (     
+   <table>
+    <thead>
+      <tr>
+        <td><StatisticLine text='good'value={good}/></td>
+      </tr>
+      <tr>
+        <td><StatisticLine text='neutral'value={neutral}/></td>
+      </tr>
+      <tr>
+        <td><StatisticLine text= 'bad'value={bad}/></td>
+      </tr>
+      <tr>
+        <td><StatisticLine text='all'value={good + neutral + bad}/></td>
+      </tr>
+      <tr>
+        <td><StatisticLine text='avarage'value={(good - bad )/(good + neutral + bad)}/></td>
+      </tr>
+      <tr>      
+        <td><StatisticLine text='positive'value={good/(good + neutral + bad) * 100 }text1='%'/></td> 
+      </tr>
+    </thead>
+    </table>
   )
 }
-const StatisticLine = ({text, value}) => (<Display text={text} value={value} />)
+const StatisticLine = ({text, value, text1}) => (<Display text={text} value={value} text1={text1}/>)
 
 const Display = (props) => {
   return (
-  <div>{props.text} {props.value}</div>
+  <div>{props.text} {props.value} {props.text1}</div>
   )
 }
 
