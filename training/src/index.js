@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import Note from './training/Note'
+import App from'./app'
 
 const notes = [
   {
