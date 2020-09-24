@@ -3,7 +3,7 @@
 
 ## Exercises:
 ****
-### Courseinfo
+### Course information
 - [ ] 2.1 
 
 - [ ] 2.2
@@ -13,6 +13,8 @@
 - [ ] 2.4 
 
 - [ ] 2.5
+
+### Phonebook
 
 - [ ] 2.6
  
@@ -26,11 +28,15 @@
 
 - [ ] 2.11
 
+### Data for countries
+
 - [ ] 2.12
 
 - [ ] 2.13
 
 - [ ] 2.14 
+
+### Phonebook
 
 - [ ] 2.15
 
