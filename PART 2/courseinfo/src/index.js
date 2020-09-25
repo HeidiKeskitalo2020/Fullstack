@@ -26,13 +26,15 @@ const Part =(props) => {
     </div>
   )
 }
-const Total =(props) => {
-  return(
-    <div>
-      <p>total of exercises {props.parts[0].exercises + props.parts[1].exercises + props.parts[2].exercises}</p>
-    </div>
-  )
-}
+const Total = ({parts}) => {
+    const totalsum = parts.reduce((prevValue, currentValue) => prevValue + currentValue.exercises, 0)
+        return (
+        <div>
+            <p><b>total of {totalsum} exercises</b></p>
+        </div>
+        )
+    } 
+
 const Course =({course}) => {
     return(
       <div>
