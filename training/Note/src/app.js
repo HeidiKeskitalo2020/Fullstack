@@ -4,7 +4,7 @@ import Notification from './components/Notification'
 import noteService from './services/notes'
 
 
-const App = (props) => {
+const App = () => {
   const [notes, setNotes] = useState([])
   const [newNote, setNewNote] = useState(' ') 
   const [showAll, setShowAll] = useState(true)
@@ -37,7 +37,6 @@ const App = (props) => {
   }
    
   const toggleImportanceOf = (id) => {
-    console.log('importance of ' + id + ' needs to be toggled')
     const url = `http://localhost:3001/notes/${id}`
     const note = notes.find(n => n.id === id)
     const changedNote = { ...note, important: !note.important }
@@ -62,7 +61,7 @@ const App = (props) => {
 
   const notesToShow = showAll
   ? notes
-  : notes.filter(note => note.important === true)
+  : notes.filter(note => note.important)
   
   return (
     <div>
