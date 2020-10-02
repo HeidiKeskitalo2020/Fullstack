@@ -33,6 +33,13 @@ const App = () => {
       id: persons.length + 1,
     
     }
+    axios
+    .post('http://localhost:3001/persons', personObject)
+    .then(response => {
+      setPersons(persons.concat(response.data))
+      setNewName('')
+      console.log(response)
+    })
 
     if (persons.some(person =>
       person.name === newName)) {
