@@ -82,8 +82,8 @@ const App = () => {
       setTimeout(() => {
         setMessage(null)
       }, 3000)
-      })
-      .catch(e => {
+      
+    }).catch(e => {
         if (e.response.status === 400) {
           setError(e.response.data.error)
           setTimeout(() => {
@@ -92,11 +92,13 @@ const App = () => {
         }
         else
         {
-          setPersons(person.filter(w => w.identity !== identity))
+          setPersons(persons.filter(w => w.id !== identity))
           setError(`Information of ${person.name} has already been removed from the server`)
           setTimeout(() => {
               setError(null)
-          }, 5000);
+          }, 4000);
+          setNewName('')
+          setNewNumber('')
         }
       })
   }
@@ -115,9 +117,8 @@ const App = () => {
       setTimeout(() => {
           setMessage(null)
       }, 3000);
-  })
-  .catch(e => {
-      setError(`Information of ${persons.name} has already been removed from the server`)
+  }).catch(e => {
+      setError(`Information of ${person.name} has already been removed from the server`)
       setTimeout(() => {
           setError(null)
       }, 5000);
