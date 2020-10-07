@@ -1,11 +1,6 @@
 {
   "persons": [
     {
-      "name": "Arto Hellas",
-      "number": "040-123456",
-      "id": 1
-    },
-    {
       "name": "Ada Lovelace",
       "number": "39-44-5323523",
       "id": 2
@@ -14,24 +9,6 @@
       "name": "Dan Abramov",
       "number": "12-43-234345",
       "id": 3
-    },
-    {
-      "name": "Heidi",
-      "number": "050-3629900",
-      "date": "2020-10-02T09:57:08.119Z",
-      "id": 5
-    },
-    {
-      "name": "Petrina",
-      "number": "55663892",
-      "date": "2020-10-05T08:51:30.720Z",
-      "id": 6
-    },
-    {
-      "name": "Joakim",
-      "number": "3345",
-      "date": "2020-10-05T08:51:38.704Z",
-      "id": 7
     }
   ]
 }

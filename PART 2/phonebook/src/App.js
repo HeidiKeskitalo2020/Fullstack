@@ -26,28 +26,53 @@ const App = () => {
       name: newName,
       number: newNumber,
       date: new Date().toISOString(),
-      id: persons.length + 1,
-    
+      //id: persons.length + 1,
     }
+
+    if (persons.every((person) => person.name.toLowerCase() !== newName.toLocaleLowerCase()))
+    {
     personService
     .create(personObject)
       .then(returnedPerson => {
       setPersons(persons.concat(returnedPerson))
       setNewName('')
+      setNewNumber('')
     })
+  }
 
-
-      if (persons.some(person =>
-      person.name === newName)) {
-        window.alert(`${newName} is already added to phonebook`);
-      }
-      else
+      else if (window.confirm(`${newName} is already added to phonebook,
+      replace the old number with a new one?`))
+            
       {
-        setPersons(persons.concat(personObject))
-        setNewName('')
-        setNewNumber('')
+        updatePerson(personObject)
       }
   }
+
+  const updatePerson = (person) => {
+    const identity = persons.find(w => w.name.toLowerCase() === person.name.toLowerCase()).id
+    person = {...person, id: identity}
+
+    personService
+    .update(identity, person)
+      .then(returnedPerson => {
+      setPersons(persons.map(w => w.id !== identity ? w : returnedPerson))
+      setNewName('')
+      setNewNumber('')
+      })
+  }
+
+  const removePerson = (id) => {
+    console.log('pressing delete button')
+    const person = persons.find(z => z.id === id)
+    if (window.confirm(`Delete ${person.name} ?`)) 
+
+      {personService
+      .remove(id)
+      .then()
+      setPersons(persons.filter(z => id !== z.id))
+      }
+
+    }
   
   const handlePersonChange = (event) => {
     console.log(event.target.value)
@@ -61,20 +86,7 @@ const App = () => {
     setFilter(event.target.value)
   }
   
-  const removePerson = (id) => {
-    console.log('pressing delete button')
-    const pers = persons.find((pers) => pers.id === id);
-    if (window.confirm(`Delete ${pers.name} ?`)) 
-
-      personService
-      .remove(id)
-      .then(response => {
-        const del = persons.filter(persons => id !==persons.id)
-        console.log('deleting', id)
-        setPersons(del)
-      })
-
-    }
+  
   
   return (
     <div>
@@ -84,10 +96,10 @@ const App = () => {
       <h3>add a new</h3>
       <PersonForm name={newName} handlePersonChange= {handlePersonChange} handleNumberChange={handleNumberChange} number={newNumber} addPerson={addPerson} />
       <h2>Numbers</h2>
-      <Persons persons={persons} filter={filter} remove={removePerson}/>
+      <Persons persons={persons} filter={filter} removePerson={removePerson}/>
     </div>
     )
+  
   }
- 
 
 export default App
