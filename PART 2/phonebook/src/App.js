@@ -3,6 +3,8 @@ import PersonForm from './components/PersonForm'
 import Filter from './components/Filter'
 import Persons from './components/Persons'
 import personService from './services/persons'
+import  Notification from './components/Notification'
+import './index.css'
 
 
 const App = () => {
@@ -10,6 +12,8 @@ const App = () => {
   const [ newName, setNewName ] = useState('')
   const [ newNumber, setNewNumber ] = useState('')
   const [ filter, setFilter ] = useState('')
+  const [ message, setMessage ] = useState(null)
+  const [ error, setError ] = useState(null)
 
   useEffect(() => {
     personService
@@ -19,17 +23,21 @@ const App = () => {
       })
   }, [])
 
+  const doIFind = (person) => {
+    return persons.every((p => p.name.toLowerCase() !== person.name.toLowerCase()))
+  }
+
   const addPerson = (event) => {
     event.preventDefault()
     console.log('button clicked', event.target)
     const personObject = {
       name: newName,
       number: newNumber,
-      date: new Date().toISOString(),
+      //date: new Date().toISOString(),
       //id: persons.length + 1,
     }
 
-    if (persons.every((person) => person.name.toLowerCase() !== newName.toLocaleLowerCase()))
+    if (doIFind(personObject))
     {
     personService
     .create(personObject)
@@ -37,6 +45,17 @@ const App = () => {
       setPersons(persons.concat(returnedPerson))
       setNewName('')
       setNewNumber('')
+
+      setMessage(`Added ${returnedPerson.name}`)
+      setTimeout(() => {
+        setMessage(null)
+      }, 3000)
+    })
+    .catch(e => {
+      setError(e.response.data.error)
+      setTimeout(() => {
+        setError(null)
+      }, 4000)
     })
   }
 
@@ -58,18 +77,51 @@ const App = () => {
       setPersons(persons.map(w => w.id !== identity ? w : returnedPerson))
       setNewName('')
       setNewNumber('')
+
+      setMessage(`Updated ${returnedPerson.name}`)
+      setTimeout(() => {
+        setMessage(null)
+      }, 3000)
+      })
+      .catch(e => {
+        if (e.response.status === 400) {
+          setError(e.response.data.error)
+          setTimeout(() => {
+            setError(null)
+          }, 4000)
+        }
+        else
+        {
+          setPersons(person.filter(w => w.identity !== identity))
+          setError(`Information of ${person.name} has already been removed from the server`)
+          setTimeout(() => {
+              setError(null)
+          }, 5000);
+        }
       })
   }
 
   const removePerson = (id) => {
     console.log('pressing delete button')
     const person = persons.find(z => z.id === id)
-    if (window.confirm(`Delete ${person.name} ?`)) 
+    if (window.confirm(`Delete ${persons.name} ?`)) 
 
       {personService
       .remove(id)
-      .then()
-      setPersons(persons.filter(z => id !== z.id))
+      .then(ignored => {
+        setPersons(persons.filter(z => z.id !== persons.id))
+
+      setMessage(`${persons.name} deleted`)
+      setTimeout(() => {
+          setMessage(null)
+      }, 3000);
+  })
+  .catch(e => {
+      setError(`Information of ${persons.name} has already been removed from the server`)
+      setTimeout(() => {
+          setError(null)
+      }, 5000);
+  })
       }
 
     }
@@ -91,8 +143,8 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
+      <Notification message={message} error={error} />
       <Filter value={filter} handleFilterChange= {handleFilterChange} />
-      
       <h3>add a new</h3>
       <PersonForm name={newName} handlePersonChange= {handlePersonChange} handleNumberChange={handleNumberChange} number={newNumber} addPerson={addPerson} />
       <h2>Numbers</h2>
