@@ -104,14 +104,14 @@ const App = () => {
   const removePerson = (id) => {
     console.log('pressing delete button')
     const person = persons.find(z => z.id === id)
-    if (window.confirm(`Delete ${persons.name} ?`)) 
+    if (window.confirm(`Delete ${person.name} ?`)) 
 
       {personService
       .remove(id)
       .then(ignored => {
-        setPersons(persons.filter(z => z.id !== persons.id))
+        setPersons(persons.filter(z => id !== z.id))
 
-      setMessage(`${persons.name} deleted`)
+      setMessage(`${person.name} deleted`)
       setTimeout(() => {
           setMessage(null)
       }, 3000);
