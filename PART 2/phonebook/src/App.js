@@ -113,13 +113,8 @@ const App = () => {
       .then(ignored => {
         setPersons(persons.filter(z => id !== z.id))
 
-      setMessage(`${person.name} deleted`)
-      setTimeout(() => {
-          setMessage(null)
-      }, 3000);
-  })
+      })
       }
-
     }
   
   const handlePersonChange = (event) => {
