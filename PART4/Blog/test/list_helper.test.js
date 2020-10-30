@@ -94,3 +94,14 @@ describe('favorite blog', () => {
         expect(result).toEqual(expectedBlog)
     })
 }) 
+
+describe('author', () => {
+    test('The most blogs is identified right', () => {
+        const result = listHelper.mostBlogs(blogs)
+        const expectedAuthor = {
+            author: 'Robert C. Martin',
+            blogs: 3
+        }
+        expect(result).toEqual(expectedAuthor)
+    })
+})
