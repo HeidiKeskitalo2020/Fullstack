@@ -20,10 +20,14 @@ const initialBlogs = [
   ]
   beforeEach(async () => {
     await Blog.deleteMany({})
-    let blogObject = new Blog(initialBlogs[0])
+    for (let blog of initialBlogs) {
+      let blogObject = new Blog(blog)
+      await blogObject.save()
+    }
+    /*let blogObject = new Blog(initialBlogs[0])
     await blogObject.save()
     blogObject = new Blog(initialBlogs[1])
-    await blogObject.save()
+    await blogObject.save()*/
   })
 
 test('Blogs are returned as json', async () => {
@@ -37,6 +41,12 @@ test('There are correct amount of blogs returned', async () => {
     const response = await api.get('/api/blogs')
 
     expect(response.body).toHaveLength(initialBlogs.length)
+})
+
+test('Id is unique', async () => {
+  const response = await api.get('/api/blogs')
+
+  expect(response.body).toBeDefined()
 })
 
 afterAll(() => {
