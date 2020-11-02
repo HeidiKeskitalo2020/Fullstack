@@ -5,6 +5,7 @@ const app = require('../app')
 
 const api = supertest(app)
 const Blog = require('../models/blog')
+const list_helper = require('../utils/list_helper')
 
 const initialBlogs = [
     {
@@ -24,30 +25,46 @@ const initialBlogs = [
       let blogObject = new Blog(blog)
       await blogObject.save()
     }
-    /*let blogObject = new Blog(initialBlogs[0])
-    await blogObject.save()
-    blogObject = new Blog(initialBlogs[1])
-    await blogObject.save()*/
   })
 
-test('Blogs are returned as json', async () => {
+  test('Blogs are returned as json', async () => {
   await api
     .get('/api/blogs')
     .expect(200)
     .expect('Content-Type', /application\/json/)
-})
+  })
 
-test('There are correct amount of blogs returned', async () => {
+  test('There are correct amount of blogs returned', async () => {
     const response = await api.get('/api/blogs')
 
     expect(response.body).toHaveLength(initialBlogs.length)
-})
+  })
 
-test('Id is unique', async () => {
-  const response = await api.get('/api/blogs')
+  test('Id is unique', async () => {
+    const response = await api.get('/api/blogs')
 
-  expect(response.body).toBeDefined()
-})
+    expect(response.body).toBeDefined()
+  })
+
+  test('Adds a new blog', async () => {
+     const newBlog = {
+        title: 'Hei K!', 
+        author: 'HK', 
+        url: 'www.HeiK.fi', 
+        likes: '2'
+    }
+    await api
+      .post('/api/blogs')
+      .send(newBlog)
+      .expect(200)
+      .expect('Content-Type', /application\/json/)
+
+      const blogs = await Blog.find({})
+      expect(blogs).toHaveLength(initialBlogs.length + 1)
+
+      const authors = blogs.map(blog => blog.author)
+      expect(authors).toContain(newBlog.author)
+  })
 
 afterAll(() => {
   mongoose.connection.close()
