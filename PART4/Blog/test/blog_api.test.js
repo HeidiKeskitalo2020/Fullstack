@@ -66,6 +66,24 @@ const initialBlogs = [
       expect(authors).toContain(newBlog.author)
   })
 
+  test('If likes property is missing defaults to 0', async () => {
+    const blog = {
+      title: 'title',
+      author: 'author',
+      url: 'url'
+    }
+    await api
+    .post('/api/blogs')
+    .send(blog)
+    .expect(200)
+    .expect('Content-Type', /application\/json/)
+
+    const blogs = await Blog.find({})
+    
+
+    expect(blogs[initialBlogs.length].likes).toBe(0)
+  })
+
 afterAll(() => {
   mongoose.connection.close()
 })
