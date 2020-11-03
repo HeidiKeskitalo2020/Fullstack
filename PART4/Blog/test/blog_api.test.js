@@ -9,14 +9,16 @@ const list_helper = require('../utils/list_helper')
 
 const initialBlogs = [
     {
-      content: 'HTML is easy',
-      date: new Date(),
-      important: false,
+      title: 'HTML is easy',
+      author: 'Heidi',
+      url: 'www.easy.fi',
+      likes: 22
     },
     {
-      content: 'Browser can execute only Javascript',
-      date: new Date(),
-      important: true,
+      title: 'Browser can execute only Javascript',
+      author: 'Juuso',
+      url: 'www.juuso.com',
+      likes: 2
     },
   ]
   beforeEach(async () => {
@@ -82,6 +84,21 @@ const initialBlogs = [
     
 
     expect(blogs[initialBlogs.length].likes).toBe(0)
+  })
+
+test('If id is valid: succeeds with status code 204', async () => {
+    const blogs = await Blog.find({})
+    const deleteBlog = blogs[0]
+
+    await api
+        .delete(`/api/blogs/${deleteBlog.id}`)
+        .expect(204)
+
+    const blogsAtEnd = await Blog.find({})
+    expect(blogsAtEnd).toHaveLength(initialBlogs.length - 1 )
+
+    const blog = blogsAtEnd.map(b => b.title)
+    expect(blog).not.toContain(deleteBlog.title)
   })
 
 afterAll(() => {

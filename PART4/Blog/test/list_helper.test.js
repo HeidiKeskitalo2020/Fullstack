@@ -1,3 +1,4 @@
+const e = require('cors')
 const listHelper = require('../utils/list_helper')
 
 const blogs = [
@@ -50,6 +51,7 @@ const blogs = [
         __v: 0
     }
 ]
+const emptyBlogList = []
 
 const listWithOneBlog = [
     {
@@ -65,8 +67,8 @@ const listWithOneBlog = [
 describe('total likes', () => {
 
     test('if empty list is zero', () => {
-        const blogs = []
-        const result = listHelper.totalLikes(blogs)
+        //const blogs = []
+        const result = listHelper.totalLikes(emptyBlogList)
         expect(result).toBe(0)
     })
 
