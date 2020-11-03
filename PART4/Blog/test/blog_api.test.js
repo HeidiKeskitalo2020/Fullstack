@@ -101,6 +101,20 @@ test('If id is valid: succeeds with status code 204', async () => {
     expect(blog).not.toContain(deleteBlog.title)
   })
 
+test('Blog must have title and url', async () => {
+  const newBlog = {
+    author: 'Juulia'
+  }
+  await api
+      .post('/api/blogs')
+      .send(newBlog)
+      .expect(400)
+
+  const bloglist = await Blog.find({})
+  expect(bloglist).toHaveLength(initialBlogs.length)
+})
+  
+
 afterAll(() => {
   mongoose.connection.close()
 })
