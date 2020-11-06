@@ -2,10 +2,11 @@ const { response } = require('express')
 const mongoose = require('mongoose')
 const supertest = require('supertest')
 const app = require('../app')
-
+const bcrypt = require('bcrypt')
 const api = supertest(app)
 const Blog = require('../models/blog')
 const list_helper = require('../utils/list_helper')
+const User = require('../models/user')
 
 const initialBlogs = [
     {
@@ -113,7 +114,63 @@ test('Blog must have title and url', async () => {
   const bloglist = await Blog.find({})
   expect(bloglist).toHaveLength(initialBlogs.length)
 })
-  
+
+beforeEach(async () => {
+  await User.deleteMany({})
+  const passwordHash = await bcrypt.hash('secret', 10)
+  const user = new User({ username: 'Juulia', passwordHash })
+  await user.save()
+})
+
+test('Creation is ok with a fresh username', async () => {
+  const usersStart = await User.find({})
+  const usersAtStart = await usersStart.map(u => u.toJSON())
+
+  const newUser = {
+    username: 'Anna',
+    name: 'Anniina',
+    password: 'Annas',
+  }
+
+  await api
+    .post('/api/users')
+    .send(newUser)
+    .expect(200)
+    .expect('Content-Type', /application\/json/)
+
+  const usersEnd = await User.find({})
+  const usersAtEnd = await usersEnd.map(u => u.toJSON())
+  expect(usersAtEnd.length).toBe(usersAtStart.length + 1)
+
+  const usernames = usersAtEnd.map(u => u.username)
+  expect(usernames).toContain(newUser.username)
+})
+
+/*test('Creation fails with proper statuscode and message if username is already in system', async () => {
+  const usersStart = await User.find({})
+  const usersAtStart = await usersStart.map(u => u.toJSON())
+  //console.error('testaako?')
+  const newUser = {
+    username: 'Juulia',
+    name: 'Juli',
+    password: 'julius',
+}
+
+const result = await api
+.post('/api/users')
+.send(newUser)
+.expect(400)
+.expect('Content-Type', /application\/json/)
+
+expect(result.body.error).toContain('`username` to be unique.')
+
+const usersEnd = await User.find({})
+const usersAtEnd = await usersEnd.map(u => u.toJSON())
+console.error('testaako?')
+expect(usersAtEnd).toHaveLength(usersAtStart.length)
+
+})*/
+
 
 afterAll(() => {
   mongoose.connection.close()
