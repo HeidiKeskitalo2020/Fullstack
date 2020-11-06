@@ -1,10 +1,10 @@
 POST http://localhost:3003/api/blogs/ 
 Content-Type: application/json 
-Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IlRva2VuIDIiLCJpZCI6IjVmYTUyZjVhYTE0MDNjMTgzOGQ1OWUwOSIsImlhdCI6MTYwNDY2MTExNH0.iHF83U5FxCYJ6LUFYXIDYnT1HxJwS8ZnbgiPHnNN_DU
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkZyaWRheSIsImlkIjoiNWZhNTM1YWEwYjIyM2Y3YzE4ZWQzNWI5IiwiaWF0IjoxNjA0NjYzMDE0fQ.QSddwoh5ov5Wm3AVxSP0ocldpMd3t-FvfL7ivUdBJs0
 
 {
-    "url": "www.TokenAdded.fi",
-    "title": "Token Added",
+    "url": "www.Friday.com",
+    "title": "Friday is the best day!",
     "author": "Heidi K",
-    "likes": 50
+    "likes": 500
 }
