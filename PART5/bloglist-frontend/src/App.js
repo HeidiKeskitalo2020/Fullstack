@@ -73,10 +73,13 @@ const App = () => {
         setMessage(null)
       }, 3000)
     } catch (exception) {
+      
       setErrorMessage('Wrong username or password')
+      setUsername('')
+      setPassword('')
       setTimeout(() => {
         setErrorMessage(null)
-      }, 5000)
+      }, 3000)  
     }
   }
   if(user === null) {
