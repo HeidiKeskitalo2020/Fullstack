@@ -12,9 +12,7 @@ const App = () => {
   const [blogs, setBlogs] = useState([])
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
-  const [blogTitle, setBlogTitle] = useState('')
-  const [blogAuthor, setBlogAuthor] = useState('')
-  const [blogUrl, setBlogUrl] = useState('')
+  
   const [user, setUser] = useState(null)
   const [message, setMessage] = useState(null)
   const [errorMessage, setErrorMessage] = useState(null)
@@ -36,23 +34,14 @@ const App = () => {
     }
   }, [])
 
-  const addBlog = (event) => {
-    event.preventDefault()
-    const blogObject = {
-      title: blogTitle,
-      author: blogAuthor,
-      url: blogUrl
-    }
+    const addBlog = (blogObject) => {
     blogFormRef.current.toggleVisibility()
     blogService
       .create(blogObject)
       .then(returnedNote => {
         setBlogs(blogs.concat(returnedNote))
-        setMessage(`A new blog "${blogTitle}" by ${blogAuthor} created.`)
-        setBlogTitle('')
-        setBlogAuthor('')
-        setBlogUrl('')
-        setTimeout(() => {
+        setMessage(`A new blog "${blogObject.title}" by ${blogObject.author} created.`)
+          setTimeout(() => {
           setMessage(null)
         }, 3000)
       })
@@ -114,15 +103,7 @@ const App = () => {
        <div>
 
       <Toggleable buttonLabel="new blog" ref={blogFormRef}>
-        <BlogForm
-          onSubmit={addBlog}
-          titleValue={blogTitle}
-          authorValue={blogAuthor}
-          urlValue={blogUrl}
-          handleTitleChange={({ target }) => setBlogTitle(target.value)}
-          handleAuthorChange={({ target }) => setBlogAuthor(target.value)}
-          handleUrlChange={({ target }) => setBlogUrl(target.value)}
-          />
+        <BlogForm createBlog={addBlog} />
       </Toggleable>
 
       </div>
