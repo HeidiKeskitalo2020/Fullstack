@@ -16,16 +16,17 @@ const Blog = ({ blog, updateBlog }) => {
   }
   const handleClick = () => {
     const blogObjekt = {
-      user: blog.user,
+      user: blog.user.id,
+      id: blog.id,
       likes: blog.likes + 1,
       author: blog.author,
       title: blog.title,
       url: blog.url
     }
     const id = blog.id
-    updateBlog(id, blogObjekt)
+    updateBlog(blogObjekt.id, blogObjekt)
   }
-
+console.log('nappula', blog.likes)
   return (
     <div style={blogStyle}>
       <div style={hideViewAll}>
@@ -35,7 +36,7 @@ const Blog = ({ blog, updateBlog }) => {
       {blog.title} {blog.author} <button onClick={() => setViewAll(false)}>hide</button>
       <div>{blog.url}</div>
       <div>likes {blog.likes} <button onClick={() => {handleClick()}}>like</button></div> 
-      <div>{blog.username}</div>
+      <div>{blog.user.name}</div> 
       </div>
     </div>
   )

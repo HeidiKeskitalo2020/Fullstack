@@ -47,9 +47,11 @@ const App = () => {
       })
   }
   const updateBlog = (id, blogObject) => {
+    const blogUpdate = blogs.find(blog => blog.id === id)
     blogService
       .update(id, blogObject)
       .then(returnedBlog => {
+        returnedBlog.user = blogUpdate.user
         setBlogs(blogs.map(blog => blog.id !== id ? blog : returnedBlog))
       })
       .catch(error => {
@@ -59,7 +61,7 @@ const App = () => {
 
   const handleLogin = async(event) => {
     event.preventDefault()
-    //console.log('logging in with', username, password)
+    console.log('logging in with', username, password)
     try {
       const user = await loginService.login({
         username, password,
