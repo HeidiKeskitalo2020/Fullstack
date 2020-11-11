@@ -23,20 +23,20 @@ const Blog = ({ blog, updateBlog }) => {
       title: blog.title,
       url: blog.url
     }
-    const id = blog.id
+    //const id = blog.id
     updateBlog(blogObjekt.id, blogObjekt)
   }
-console.log('nappula', blog.likes)
+
   return (
     <div style={blogStyle}>
       <div style={hideViewAll}>
         {blog.title} {blog.author} <button onClick={() => setViewAll(true)}>view</button>
       </div>
       <div style={showViewAll}>
-      {blog.title} {blog.author} <button onClick={() => setViewAll(false)}>hide</button>
-      <div>{blog.url}</div>
-      <div>likes {blog.likes} <button onClick={() => {handleClick()}}>like</button></div> 
-      <div>{blog.user.name}</div> 
+        {blog.title} {blog.author} <button onClick={() => setViewAll(false)}>hide</button>
+        <div>{blog.url}</div>
+        <div>likes {blog.likes} <button onClick={() => {handleClick()}}>like</button></div>
+        <div>{blog.user.name}</div>
       </div>
     </div>
   )
