@@ -6,7 +6,7 @@ import Blog from './Blog'
 describe('<Blog />', () => {
   let component
   const likeBlogs = jest.fn()
-  //const mockHandler = jest.fn()
+  
   const blog = {
     title: 'Component testing is done with react-testing-library',
     author: 'Winnie the Pooh',
