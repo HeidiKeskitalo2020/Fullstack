@@ -51,6 +51,21 @@ describe('Blog app', function () {
       cy.contains('www.HeidiCypressBlogs.com')
       cy.contains('A new blog "Blog created by cypress" by Heidi K. created.')
     })
+    it('A blog can be liked', function() {
+      cy.contains('Create new blog').click()
+      cy.get('#title').type('Blog created by cypress')
+      cy.get('#author').type('Heidi K.')
+      cy.get('#url').type('www.HeidiCypressBlogs.com')
+      cy.get('#newBlogCreate').click()
+      cy.contains('view').click()
+
+      cy.get('#likesButton').click()
+      cy.get('#likes').contains(1)
+
+      cy.get('#likesButton').click()
+      cy.get('#likes').contains(2)
+    })
+
   })
 
 })

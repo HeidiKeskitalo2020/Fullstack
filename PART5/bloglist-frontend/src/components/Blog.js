@@ -35,7 +35,7 @@ const Blog = ({ blog, updateBlog }) => {
       <div style={showViewAll} className='info'>
         {blog.title} {blog.author} <button onClick={() => setViewAll(false)}>hide</button>
         <div> {blog.url}</div>
-        <div>likes {blog.likes} <button onClick={() => {handleClick()}}>like</button></div>
+        <div id='likes'>likes {blog.likes} <button id='likesButton' onClick={() => {handleClick()}}>like</button></div>
         <div>{blog.user.name}</div>
       </div>
     </div>
