@@ -32,4 +32,26 @@ describe('Blog app', function () {
       cy.get('.error').should('have.css', 'color', 'rgb(255, 0, 0)')
     })
   })
+
+  describe.only('When logged in', function() {
+    beforeEach(function() {
+      cy.get('#username').type('HeidiK')
+      cy.get('#password').type('salainen')
+      cy.get('#login-button').click()
+    })
+
+    it('A blog can be created', function() {
+      cy.contains('Create new blog').click()
+      cy.get('#title').type('Blog created by cypress')
+      cy.get('#author').type('Heidi K.')
+      cy.get('#url').type('www.HeidiCypressBlogs.com')
+      cy.get('#newBlogCreate').click()
+
+      cy.contains('Blog created by cypress')
+      cy.contains('www.HeidiCypressBlogs.com')
+      cy.contains('A new blog "Blog created by cypress" by Heidi K. created.')
+    })
+  })
+
 })
+

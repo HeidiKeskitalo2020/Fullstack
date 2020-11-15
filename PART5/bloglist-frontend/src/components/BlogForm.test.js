@@ -26,12 +26,12 @@ test('Testing fot BlogForm: calls the createBlog event handler correct way.', ()
   fireEvent.change(inputUrl, {
     target: { value: 'Testing of form url.' }
   })
-  
+
   fireEvent.submit(form)
 
   expect(createBlog.mock.calls).toHaveLength(1)
-  expect(createBlog.mock.calls[0][0].title).toBe("Testing  for form title.")
-  expect(createBlog.mock.calls[0][0].author).toBe("Testing for form author.")
-  expect(createBlog.mock.calls[0][0].url).toBe("Testing of form url.")
-  
+  expect(createBlog.mock.calls[0][0].title).toBe('Testing for form title.')
+  expect(createBlog.mock.calls[0][0].author).toBe('Testing for form author.')
+  expect(createBlog.mock.calls[0][0].url).toBe('Testing of form url.')
+
 })
