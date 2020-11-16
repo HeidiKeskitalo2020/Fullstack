@@ -33,7 +33,7 @@ describe('Blog app', function () {
     })
   })
 
-  describe.only('When logged in', function() {
+  describe('When logged in', function() {
     beforeEach(function() {
       cy.get('#username').type('HeidiK')
       cy.get('#password').type('salainen')
@@ -76,7 +76,36 @@ describe('Blog app', function () {
       cy.contains('Blog created by cypress')
       cy.get('#deleteButton').click()
       cy.get('html').should('not.have.value', 'Blog created by cypress')
+    })
+    describe.only('Blogs are sorted by likes', function () {
+      beforeEach(function () {
+        cy.contains('Create new blog').click()
+        cy.get('#title').type('Blog created by cypress')
+        cy.get('#author').type('Heidi K.')
+        cy.get('#url').type('www.HeidiCypressBlogs.com')
+        cy.get('#likes').type('47')
+        cy.get('#newBlogCreate').click()
 
+        cy.contains('Create new blog').click()
+        cy.get('#title').type('Another blogi test ')
+        cy.get('#author').type('Virpi H.')
+        cy.get('#url').type('www.Virpi.com')
+        cy.get('#likes').type('250')
+        cy.get('#newBlogCreate').click()
+
+        cy.contains('view').click()
+        cy.get('#likesButton').click()
+        cy.get('#likesButton').click()
+        cy.get('#likesButton').click()
+        cy.get('#likesButton').click()
+        cy.get('#likes').contains(4)
+
+        cy
+      })
+      it('Blog with most likes is first shown', function () {
+        cy.get('.visible').eq(0).should('contain', 'likes 250')
+        cy.get('.visible').eq(1).should('contain', 'likes 47')
+      })
     })
 
   })
