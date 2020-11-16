@@ -67,6 +67,24 @@ const App = () => {
         console.log('There is something wrong!', error)
       })
   }
+  const deleteBlog = (id) => {
+    const blog = blogs.find(b => b.id === id)
+    const confMessage = (window.confirm(`Remove blog ${blog.title} by ${blog.author}?`))
+    if(confMessage) {
+      blogService
+        .erase(id)
+        .then(() => {
+          setBlogs(blogs.filter(b => id !== b.id))
+          setMessage(`${blog.title} was deleted!`)
+          setTimeout(() => {
+            setMessage(null)
+          }, 3000)
+        })
+    }
+    else {
+      return null
+    }
+  }
 
   const handleLogin = async(event) => {
     event.preventDefault()
@@ -130,7 +148,7 @@ const App = () => {
 
       </div>
       {sortBlogs(blogs).map(blog =>
-        <Blog key={blog.id} blog={blog} updateBlog={updateBlog}/>
+        <Blog key={blog.id} blog={blog} updateBlog={updateBlog} deleteBlog={deleteBlog} user={user} />
       )}
     </div>
   )

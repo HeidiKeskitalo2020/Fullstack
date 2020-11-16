@@ -1,7 +1,12 @@
 import React, { useState } from 'react'
 
-const Blog = ({ blog, updateBlog }) => {
+const Blog = ({ blog, updateBlog, deleteBlog, user }) => {
   const [viewAll, setViewAll] = useState(false)
+
+  let showDelete = { display: 'none' }
+  if (user.name === blog.user.name) {
+    showDelete = { display: '' }
+  }
 
   const hideViewAll = { display: viewAll ? 'none' : '' }
   const showViewAll = { display: viewAll ? '' : 'none' }
@@ -26,6 +31,9 @@ const Blog = ({ blog, updateBlog }) => {
     //const id = blog.id
     updateBlog(blogObjekt.id, blogObjekt)
   }
+  const handleDeleteClick = () => {
+    deleteBlog(blog.id, blog.title, blog.author)
+  }
 
   return (
     <div style={blogStyle} >
@@ -37,6 +45,7 @@ const Blog = ({ blog, updateBlog }) => {
         <div> {blog.url}</div>
         <div id='likes'>likes {blog.likes} <button id='likesButton' onClick={() => {handleClick()}}>like</button></div>
         <div>{blog.user.name}</div>
+        <div style ={showDelete}><button id='deleteButton' onClick={() => {handleDeleteClick()}}>remove</button> </div>
       </div>
     </div>
   )

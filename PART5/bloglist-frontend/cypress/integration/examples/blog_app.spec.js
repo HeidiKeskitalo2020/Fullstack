@@ -65,6 +65,19 @@ describe('Blog app', function () {
       cy.get('#likesButton').click()
       cy.get('#likes').contains(2)
     })
+    it('A blog can be removed', function() {
+      cy.contains('Create new blog').click()
+      cy.get('#title').type('Blog created by cypress')
+      cy.get('#author').type('Heidi K.')
+      cy.get('#url').type('www.HeidiCypressBlogs.com')
+      cy.get('#newBlogCreate').click()
+      cy.contains('view').click()
+
+      cy.contains('Blog created by cypress')
+      cy.get('#deleteButton').click()
+      cy.get('html').should('not.have.value', 'Blog created by cypress')
+
+    })
 
   })
 
