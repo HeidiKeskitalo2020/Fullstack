@@ -6,8 +6,7 @@ const notificationReducer = (state = initialState, action) => {
       let stateClone = { ...state }
       stateClone = action.notification
       return stateClone
-    case 'HIDE_NOTIFICATION':
-      return initialState
+    
     default:
       return state
   }
@@ -18,12 +17,7 @@ export const showNotification = notification  => {
     notification,
   }
 }
-export const hideNotification = (notification)  => {
-  return {
-    type: 'HIDE_NOTIFICATION',
-    notification,
-  }
-}
+
 
 
 export default notificationReducer
