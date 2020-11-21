@@ -7,6 +7,7 @@ import {
   useParams, 
   useHistory 
 } from 'react-router-dom'
+import { useField } from './hooks'
 
 const Menu = () => {
   const padding = {
@@ -73,22 +74,28 @@ const Footer = () => (
 let timeoutID
 
 const CreateNew = (props) => {
-  const [content, setContent] = useState('')
-  const [author, setAuthor] = useState('')
-  const [info, setInfo] = useState('')
+  const content = useField('text')
+  const author = useField('text')
+  const info = useField('text')
 
   const history = useHistory()
-  clearTimeout(timeoutID)
+  //clearTimeout(timeoutID)
 
   const handleSubmit = (e) => {
     e.preventDefault()
     props.addNews({
-      content,
-      author,
-      info,
-      votes: 0
+      content : content.value,
+      author : author.value,
+      info : info.value,
+      votes : 0
     })
     history.push('/')
+  }
+
+  const resetFields = () => {
+    content.reset()
+    author.reset()
+    info.reset()
   }
 
   return (
@@ -97,17 +104,18 @@ const CreateNew = (props) => {
       <form onSubmit={handleSubmit}>
         <div>
           content
-          <input name='content' value={content} onChange={(e) => setContent(e.target.value)} />
+          <input {...content} name='content' />
         </div>
         <div>
           author
-          <input name='author' value={author} onChange={(e) => setAuthor(e.target.value)} />
+          <input {...author} name='author' />
         </div>
         <div>
           url for more info
-          <input name='info' value={info} onChange={(e)=> setInfo(e.target.value)} />
+          <input {...info} name='info' />
         </div>
-        <button>create</button>
+        <button type="submit">Create</button>
+        <button type="button" onClick= {resetFields}>Reset</button>
       </form>
     </div>
   )
