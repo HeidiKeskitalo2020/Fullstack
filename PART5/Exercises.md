@@ -21,7 +21,7 @@
 
 - [x] 5.9 *
 
-- [ ] 5.10 * Delete button
+- [x] 5.10 * Delete button
 
 - [x] 5.11
 
