@@ -1,5 +1,12 @@
 import React, { useState } from 'react'
-import { BrowserRouter as Router, Switch, Route, Link, useParams } from 'react-router-dom'
+import { 
+  BrowserRouter as Router, 
+  Switch, 
+  Route, 
+  Link, 
+  useParams, 
+  useHistory 
+} from 'react-router-dom'
 
 const Menu = () => {
   const padding = {
@@ -63,20 +70,25 @@ const Footer = () => (
   </div>
 )
 
+let timeoutID
+
 const CreateNew = (props) => {
   const [content, setContent] = useState('')
   const [author, setAuthor] = useState('')
   const [info, setInfo] = useState('')
 
+  const history = useHistory()
+  clearTimeout(timeoutID)
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    props.addNew({
+    props.addNews({
       content,
       author,
       info,
       votes: 0
     })
+    history.push('/')
   }
 
   return (
@@ -125,6 +137,10 @@ const App = () => {
   const addNew = (anecdote) => {
     anecdote.id = (Math.random() * 10000).toFixed(0)
     setAnecdotes(anecdotes.concat(anecdote))
+    setNotification(`The anecdote '${anecdote.content}' is created!`)
+    timeoutID = setTimeout(() => {
+      setNotification('')
+    }, 10000)
   }
 
   const anecdoteById = (id) =>
@@ -146,6 +162,7 @@ const App = () => {
       <Router>
       <h1>Software anecdotes</h1>
       <Menu />
+      {notification}
       <Switch>
         <Route path="/anecdotes/:id">
           <Anecdote anecdotes={anecdotes} />
@@ -160,8 +177,8 @@ const App = () => {
           <AnecdoteList anecdotes={anecdotes} />
         </Route>
       </Switch>
-      <Footer />
       </Router>
+      <Footer />
     </div>
   )
 }
