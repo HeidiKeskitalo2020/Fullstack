@@ -74,12 +74,12 @@ const Footer = () => (
 let timeoutID
 
 const CreateNew = (props) => {
-  const content = useField('text')
-  const author = useField('text')
-  const info = useField('text')
+  const { resetField: contentReset, ...content } = useField('text')
+  const { resetField: authorReset, ...author } = useField('text')
+  const { resetField: infoReset, ...info } = useField('text')
 
   const history = useHistory()
-  //clearTimeout(timeoutID)
+  clearTimeout(timeoutID)
 
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -93,9 +93,9 @@ const CreateNew = (props) => {
   }
 
   const resetFields = () => {
-    content.reset()
-    author.reset()
-    info.reset()
+    contentReset()
+    authorReset()
+    infoReset()
   }
 
   return (
@@ -115,7 +115,7 @@ const CreateNew = (props) => {
           <input {...info} name='info' />
         </div>
         <button type="submit">Create</button>
-        <button type="button" onClick= {resetFields}>Reset</button>
+        <button type="reset" onClick= {resetFields}>Reset</button>
       </form>
     </div>
   )
@@ -151,7 +151,7 @@ const App = () => {
     }, 10000)
   }
 
-  const anecdoteById = (id) =>
+  /*const anecdoteById = (id) =>
     anecdotes.find(a => a.id === id)
 
   const vote = (id) => {
@@ -163,7 +163,7 @@ const App = () => {
     }
 
     setAnecdotes(anecdotes.map(a => a.id === id ? voted : a))
-  }
+  }*/
 
   return (
     <div>
