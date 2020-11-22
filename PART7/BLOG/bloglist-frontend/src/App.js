@@ -7,13 +7,15 @@ import NewBlog from './components/NewBlog'
 import blogService from './services/blogs'
 import loginService from './services/login'
 import storage from './utils/storage'
+import { useDispatch } from 'react-redux'
+import { setNotification } from './reducers/notificationReducers'
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
   const [user, setUser] = useState(null)
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
-  const [notification, setNotification] = useState(null)
+  const dispatch = useDispatch()
 
   const blogFormRef = React.createRef()
 
@@ -29,12 +31,8 @@ const App = () => {
   }, [])
 
   const notifyWith = (message, type='success') => {
-    setNotification({
-      message, type
-    })
-    setTimeout(() => {
-      setNotification(null)
-    }, 5000)
+    const mes = { message, type }
+    dispatch(setNotification(mes, 5))
   }
 
   const handleLogin = async (event) => {
@@ -79,6 +77,7 @@ const App = () => {
       await blogService.remove(id)
       setBlogs(blogs.filter(b => b.id !== id))
     }
+    notifyWith(`${blogToRemove.author} deleted blog ${blogToRemove.title}`, 'error')
   }
 
   const handleLogout = () => {
@@ -91,7 +90,7 @@ const App = () => {
       <div>
         <h2>login to application</h2>
 
-        <Notification notification={notification} />
+        <Notification />
 
         <form onSubmit={handleLogin}>
           <div>
@@ -117,12 +116,11 @@ const App = () => {
   }
 
   const byLikes = (b1, b2) => b2.likes - b1.likes
-
   return (
     <div>
       <h2>blogs</h2>
 
-      <Notification notification={notification} />
+      <Notification />
 
       <p>
         {user.name} logged in <button onClick={handleLogout}>logout</button>
@@ -131,14 +129,13 @@ const App = () => {
       <Togglable buttonLabel='create new blog'  ref={blogFormRef}>
         <NewBlog createBlog={createBlog} />
       </Togglable>
-
       {blogs.sort(byLikes).map(blog =>
         <Blog
           key={blog.id}
           blog={blog}
           handleLike={handleLike}
           handleRemove={handleRemove}
-          own={user.username===blog.user.username}
+          own={user.username===blog.user}
         />
       )}
     </div>
