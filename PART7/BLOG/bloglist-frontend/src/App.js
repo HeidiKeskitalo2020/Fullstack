@@ -3,6 +3,7 @@ import Blog from './components/Blog'
 import Notification from './components/Notification'
 import Togglable from './components/Togglable'
 import NewBlog from './components/NewBlog'
+import { userAdd, userNullify } from './reducers/userReducer'
 
 //import blogService from './services/blogs'
 import loginService from './services/login'
@@ -13,10 +14,11 @@ import { initializeBlogs, addBlogs, like, remove } from './reducers/blogReducer'
 
 const App = () => {
   //const [blogs, setBlogs] = useState([])
-  const [user, setUser] = useState(null)
+  //const [user, setUser] = useState(null)
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const blogs = useSelector(state => state.blogs)
+  const user = useSelector(state => state.user)
   const dispatch = useDispatch()
 
   const blogFormRef = React.createRef()
@@ -27,8 +29,8 @@ const App = () => {
 
   useEffect(() => {
     const user = storage.loadUser()
-    setUser(user)
-  }, [])
+    dispatch(userAdd(user))
+  }, [dispatch])
 
   const notifyWith = (message, type='success') => {
     const mes = { message, type }
@@ -44,7 +46,7 @@ const App = () => {
 
       setUsername('')
       setPassword('')
-      setUser(user)
+      dispatch(userAdd(user))
       notifyWith(`${user.name} welcome back!`)
       storage.saveUser(user)
     } catch(exception) {
@@ -84,7 +86,7 @@ const App = () => {
   }
 
   const handleLogout = () => {
-    setUser(null)
+    dispatch(userNullify())
     storage.logoutUser()
   }
 
