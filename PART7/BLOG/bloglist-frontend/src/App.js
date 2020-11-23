@@ -102,6 +102,11 @@ const App = () => {
     ? users.find(user => user.id === (fit.params.id))
     : null
 
+  const firB = useRouteMatch('/blogs/:id')
+  const fitBlog = firB
+    ? blogs.find(user => user.id === (firB.params.id))
+    : null
+
   if ( !user ) {
     console.log('usersname', username)
     return (
@@ -144,7 +149,7 @@ const App = () => {
 
       return (
         <>
-          <h2>Name: {name}</h2>
+          <h2>{name}</h2>
           <b>added blogs</b>
           <ul>
             {fitUser.blogs.map(blog =>
@@ -154,6 +159,21 @@ const App = () => {
         </>
       )}
     return
+  }
+  const BlogPage =() => {
+    if(!fitBlog) {
+      return null
+    }
+
+    return (
+      <>
+        <h2>{fitBlog.title} {fitBlog.author}</h2>
+        <a href={fitBlog.url}>{fitBlog.url}</a>
+        <div>{fitBlog.likes} likes <button onClick={() => handleLike(fitBlog.id)}>like</button></div>
+        <div>added by {fitBlog.author}</div>
+      </>
+    )
+
   }
 
   return (
@@ -190,7 +210,9 @@ const App = () => {
               </tbody>
             </table>
           </Route>
-
+          <Route path="/blogs/:id">
+            <BlogPage/>
+          </Route>
           <Route path="/">
             <Togglable buttonLabel='create new blog' ref={blogFormRef}>
               <NewBlog createBlog={createBlog} />
