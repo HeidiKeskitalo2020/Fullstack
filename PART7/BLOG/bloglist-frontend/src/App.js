@@ -13,7 +13,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { setNotification } from './reducers/notificationReducers'
 import { initializeBlogs, addBlogs, like, remove } from './reducers/blogReducer'
 import { initializeUsers } from './reducers/usersReducer'
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
+import { BrowserRouter as Router, Switch, Route, Link, useRouteMatch } from 'react-router-dom'
 
 const App = () => {
   //const [blogs, setBlogs] = useState([])
@@ -97,6 +97,11 @@ const App = () => {
     storage.logoutUser()
   }
 
+  const fit = useRouteMatch('/users/:id')
+  const fitUser = fit
+    ? users.find(user => user.id === (fit.params.id))
+    : null
+
   if ( !user ) {
     console.log('usersname', username)
     return (
@@ -128,7 +133,29 @@ const App = () => {
   }
 
   const byLikes = (b1, b2) => b2.likes - b1.likes
-  //console.log('username', buttonLable)
+  //console.log('username', username)
+  const User = () => {
+    if(!fitUser) {
+      return null
+    }
+
+    if (user !== null) {
+      const name = fitUser.name
+
+      return (
+        <>
+          <h2>Name: {name}</h2>
+          <b>added blogs</b>
+          <ul>
+            {fitUser.blogs.map(blog =>
+              <li key={blog.id}>{blog.title}</li>
+            )}
+          </ul>
+        </>
+      )}
+    return
+  }
+
   return (
     <div>
       <Router>
@@ -143,6 +170,9 @@ const App = () => {
         </p>
 
         <Switch>
+          <Route path="/users/:id">
+            <User user={fitUser}/>
+          </Route>
           <Route path="/users">
             <h3>Users</h3>
             <table>
@@ -151,16 +181,18 @@ const App = () => {
               </thead>
 
               <tbody>
-                {users.map(user => <tr key={user.id}>
-                  <td>{user.name}</td><td>{user.blogs.length}</td>
-                </tr>
+                {users.map(user =>
+                  <tr key={user.id}>
+                    <td><Link to={`/users/${user.id}`}> {user.name}</Link></td>
+                    <td>{user.blogs.length}</td>
+                  </tr>
                 )}
               </tbody>
             </table>
           </Route>
 
           <Route path="/">
-            <Togglable buttonLable='create new blog' ref={blogFormRef}>
+            <Togglable buttonLabel='create new blog' ref={blogFormRef}>
               <NewBlog createBlog={createBlog} />
             </Togglable>
             {blogs.sort(byLikes).map(blog =>
