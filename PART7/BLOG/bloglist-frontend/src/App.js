@@ -4,9 +4,10 @@ import Notification from './components/Notification'
 import Togglable from './components/Togglable'
 import NewBlog from './components/NewBlog'
 import UsersService from './services/users'
+import CommentForm from './components/CommentForm'
 import { userAdd, userNullify } from './reducers/userReducer'
 
-//import blogService from './services/blogs'
+import blogService from './services/blogs'
 import loginService from './services/login'
 import storage from './utils/storage'
 import { useDispatch, useSelector } from 'react-redux'
@@ -92,6 +93,22 @@ const App = () => {
     }
   }
 
+  const postComment = async (comment) => {
+    const id = fitBlog.id
+    try {
+      const newComment = { 'comment' : comment }
+      await blogService.comment(newComment, id)
+      //setComment('')
+      notifyWith(`Your commented blog:   ${comment}`)
+      dispatch(initializeBlogs(blogs.map(b => b.id === id
+        ? { ...fitBlog, comments: fitBlog.comments.concat(comment) }
+        : b
+      )))
+    } catch(exception) {
+      console.log(exception)
+    }
+  }
+
   const handleLogout = () => {
     dispatch(userNullify())
     storage.logoutUser()
@@ -108,7 +125,7 @@ const App = () => {
     : null
 
   if ( !user ) {
-    console.log('usersname', username)
+    //console.log('usersname', username)
     return (
       <div>
         <h2>login to application</h2>
@@ -171,6 +188,17 @@ const App = () => {
         <a href={fitBlog.url}>{fitBlog.url}</a>
         <div>{fitBlog.likes} likes <button onClick={() => handleLike(fitBlog.id)}>like</button></div>
         <div>added by {fitBlog.author}</div>
+        <h3>comments:</h3>
+        <CommentForm
+          //setComment = {setComment}
+          postComment = {postComment}
+          id = {fitBlog.id}
+        />
+        <ul>
+          {fitBlog.comments.map((comment, index) =>
+            <li key={index}>{comment}</li>
+          )}
+        </ul>
       </>
     )
   }
@@ -220,7 +248,7 @@ const App = () => {
             </table>
           </Route>
           <Route path="/blogs/:id">
-            <BlogPage/>
+            <BlogPage />
           </Route>
           <Route path="/">
             <Togglable buttonLabel='create new blog' ref={blogFormRef}>
