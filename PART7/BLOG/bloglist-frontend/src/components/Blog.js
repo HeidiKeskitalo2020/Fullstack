@@ -1,4 +1,6 @@
 import React from 'react'
+import {  ListGroup } from 'react-bootstrap'
+
 //import PropTypes from 'prop-types'
 
 const Blog = ({ blog }) => {
@@ -15,8 +17,12 @@ const Blog = ({ blog }) => {
   //const label = visible ? 'hide' : 'view'
 
   return (
+
     <div style={blogStyle} className='blog'>
-      <a href={`/blogs/${blog.id}`}>{blog.title} {blog.author} </a>
+      <ListGroup>
+        <a href={`/blogs/${blog.id}`}>{blog.title} {blog.author} </a>
+      </ListGroup>
+
     </div>
   )
 }
