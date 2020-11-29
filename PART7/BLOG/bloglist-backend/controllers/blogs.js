@@ -47,7 +47,7 @@ router.post('/:id/comments', async (request, response) => {
   const comments = blog.comments
   console.log('comments: ', comments)
 
-  const update = blog.comments.push(request.body.comments)
+  const update = blog.comments.push(request.body.comment)
 
   await blog.update(update)
   await blog.save()
@@ -55,9 +55,9 @@ router.post('/:id/comments', async (request, response) => {
   response.json(blog)
 
 })
-/*const comment = request.body.comment
+/*const comment2 = request.body.comment
 
-  const commentedBlog = await Blog.findByIdAndUpdate(request.params.id, { $push: { 'comments': comment } }, { new: true })
+  const commentedBlog = await Blog.findByIdAndUpdate(request.params.id, { $push: { 'comments': comment2 } }, { new: true })
   response.json(commentedBlog.toJSON())
 })*/
 

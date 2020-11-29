@@ -31,7 +31,7 @@ const Users = () => {
         </tbody>
       </table>
     </div>
-  /
+
 }
 
 export default Users*/

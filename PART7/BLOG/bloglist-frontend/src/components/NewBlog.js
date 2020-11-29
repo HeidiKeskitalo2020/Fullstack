@@ -24,7 +24,7 @@ const NewBlog = (props) => {
       <Form onSubmit={handleNewBlog}>
         <Form.Group>
           <div>
-            <Form.Label>author</Form.Label>
+            <Form.Label>author: </Form.Label>
             <Form.Control
               id='author'
               value={author}
@@ -32,7 +32,7 @@ const NewBlog = (props) => {
             />
           </div>
           <div>
-            <Form.Label>title</Form.Label>
+            <Form.Label>title: </Form.Label>
             <Form.Control
               id='title'
               value={title}
@@ -40,7 +40,7 @@ const NewBlog = (props) => {
             />
           </div>
           <div>
-            <Form.Label>url</Form.Label>
+            <Form.Label>url: </Form.Label>
             <Form.Control
               id='url'
               value={url}

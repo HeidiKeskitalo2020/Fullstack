@@ -58,9 +58,9 @@ const App = () => {
       setUsername('')
       setPassword('')
       dispatch(userAdd(user))
-      notifyWith(`${user.name} welcome back!`)
+      //notifyWith(`${user.name} welcome back!`)
       storage.saveUser(user)
-      setMessage(`welcome ${user}`)
+      setMessage(`welcome ${user.name}, happy to see you again! `)
       setTimeout(() => {
         setMessage(null)
       }, 10000)
@@ -135,11 +135,7 @@ const App = () => {
     //console.log('usersname', username)
     return (
       <div className="container" >
-        {(message &&
-        <Alert variant="success">
-          {message}
-        </Alert>
-        )}
+
         <h2>login to application</h2>
 
         <Notification />
@@ -195,7 +191,7 @@ const App = () => {
     if(!fitBlog) {
       return null
     }
-
+    //console.log('comment', Comment)
     return (
       <>
         <h2>{fitBlog.title} {fitBlog.author}</h2>
@@ -230,6 +226,11 @@ const App = () => {
 
   return (
     <div className="container">
+      {(message &&
+        <Alert variant="success">
+          {message}
+        </Alert>
+      )}
       <Router>
         <div >
           <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
